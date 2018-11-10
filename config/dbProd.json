@@ -1,6 +1,6 @@
 {
   "user": "andria",
-  "host": "gooses",
-  "database": "virtualq_new_db",
+  "host": "127.0.0.1",
+  "database": "tip_labor_statistics",
   "port": "5432"
 }
