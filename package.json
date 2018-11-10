@@ -1,0 +1,22 @@
+{
+  "name": "tipStrategies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-data-pull": "node .",
+    "start-server": "NODE_ENV=production node server",
+    "dev-server": "NODE_ENV=development nodemon server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "pg": "^7.4.3",
+    "pg-gen": "^0.1.0"
+  },
+  "devDependencies": {}
+}
