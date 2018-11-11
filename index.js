@@ -4,7 +4,6 @@ const { Pool, Client } = require( 'pg' );
 const axios = require( 'axios' );
 
 const dbSecrets = require( './config/dbConfig' );
-console.log('dbSecrets', dbSecrets);
 const blsConfig = require( './config/bls.json' );
 
 const client = new Client( dbSecrets );
@@ -79,7 +78,6 @@ function handleResponse( res ) {
 
   results.forEach( result => {
     var id = result.seriesID;
-    console.log('saving results for', id);
     var timelyResults = result.data;
     timelyResults.forEach( timePeriod => {
       var isoPeriod = createISOString( timePeriod);

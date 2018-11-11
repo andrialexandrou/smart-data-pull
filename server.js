@@ -9,25 +9,38 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/laus', (req, res) => {
-  // getSurveyWithValues( (err, dbRes) => {
-  //   res.send(dbRes.rows);
-  // } );
-  let response = null;
-  getSurveyWithValues()
-  .then( result => {
-    response = result;
-    // res.send( result );
-    return getSurveyWithValues()
-  })
-  .then( moreResult => {
-    if ( moreResult.length > 0 ) {
-      console.log('ADDING MORE');
-      response.hasMoreResults = true;
+
+const _ = require('lodash');
+
+const lausFilters = {
+  series_id: true,
+  period: true,
+  label: true,
+  seasonality_enum: true,
+  area: true,
+  area_type: true,
+  measure_type: true,
+  value: true
+};
+
+function collectFilters( queryParams ) {
+  const thisRequest = {};
+  _.forEach( queryParams, function(value, param) {
+    if ( lausFilters[ param ] ) {
+      thisRequest[ param ] = value;
     }
-    response.push({hasMoreResults: true});
-    res.send( response );
   })
+  return !_.isEmpty( thisRequest ) && thisRequest;
+}
+
+app.get('/laus', (req, res) => {
+  const page = req.query.page || 0;
+  const filters = collectFilters(req.query);
+
+  getSurveyWithValues( page, filters, (err, dbRes) => {
+    if ( err ) console.log(err);
+    res.send(dbRes.rows);
+  } );
 });
 
 app.get('/unemp', (req, res) => {

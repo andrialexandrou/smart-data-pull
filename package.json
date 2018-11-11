@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "pg": "^7.4.3",
     "pg-gen": "^0.1.0"
   },
