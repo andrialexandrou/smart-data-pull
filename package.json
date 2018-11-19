@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest tests",
     "start-data-pull": "node .",
     "start-server": "NODE_ENV=production node server",
-    "dev-server": "NODE_ENV=development nodemon server"
+    "dev-server": "NODE_ENV=development nodemon server",
+    "dev-tests": "npm run test -- --watch"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +18,11 @@
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "pg": "^7.4.3",
-    "pg-gen": "^0.1.0"
+    "pg-gen": "^0.1.0",
+    "supertest": "^3.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "server-terminate": "^1.5.0"
+  }
 }
