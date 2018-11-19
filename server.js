@@ -1,4 +1,7 @@
+const fs = require('fs');
+
 const express = require('express');
+const createCsv = require('json2csv').parse;
 const app = express();
 const port = 4000;
 
@@ -32,6 +35,57 @@ function collectFilters( queryParams ) {
   })
   return !_.isEmpty( thisRequest ) && thisRequest;
 }
+
+function convertToCsv( arrayOfInfo ) {
+  const fields = [
+    'survey_name',
+    'series_title',
+    'series_id',
+    'period',
+    'label',
+    'seasonality_enum',
+    'area',
+    'area_type',
+    'measure_type',
+    'value'
+  ];
+  const options = { fields: fields };
+  // console.log('stuff?', typeof arrayOfInfo, arrayOfInfo.length);
+  // console.log(arrayOfInfo[ 0 ]);
+  return createCsv( arrayOfInfo, options );
+}
+
+const csvFileName = './sheetToDownload.csv';
+
+app.get('/laus/download', (req, res) => {
+  const page = req.query.page || 0;
+  const filters = collectFilters(req.query);
+  if ( !filters ) {
+    res.status(404).send('Sorry, need to add filters!');
+    return;
+  }
+
+  getSurveyWithValues( page, filters, (err, dbRes) => {
+    if ( err ) {
+      console.log('err', err);
+      res.status(400).send('Invalid Filter');
+    }
+    if ( dbRes && dbRes.rows ) {
+      // conver to CSV
+      const csv = convertToCsv( dbRes.rows );
+      if ( err ) res.status(500).send('Problem creating CSV on server.');
+      // fs writeFile
+      fs.writeFile( csvFileName, csv, err => {
+        if ( err ) res.status(400).send('Problem writing to file!');
+        res.download( csvFileName, 'laus.csv');
+        setTimeout( () => fs.unlink( csvFileName, () => {}), 10000 );
+      })
+
+    } else {
+      res.status(200).send('No results! No filter?')
+    }
+  } );
+})
 
 app.get('/laus', (req, res) => {
   const page = req.query.page || 0;
