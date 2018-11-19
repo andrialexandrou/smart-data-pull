@@ -38,8 +38,11 @@ app.get('/laus', (req, res) => {
   const filters = collectFilters(req.query);
 
   getSurveyWithValues( page, filters, (err, dbRes) => {
-    if ( err ) console.log(err);
-    res.send(dbRes.rows);
+    if ( err ) {
+      console.log('err', err);
+      res.status(400).send('Invalid Filter');
+    }
+    res.send(dbRes && dbRes.rows || dbRes);
   } );
 });
 

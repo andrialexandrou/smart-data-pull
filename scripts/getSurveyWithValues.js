@@ -8,10 +8,24 @@ const client = new Client( dbSecrets );
 
 client.connect();
 
+const tables = {
+  survey_name: 'table2',
+  series_title: 'table1',
+  series_id: 'table1',
+  period: 'table1',
+  label: 'table1',
+  seasonality_enum: 'table2',
+  area: 'table2',
+  area_type: 'table5',
+  measure_type: 'table4',
+  value: 'table1'
+};
+
 function createWhereClause( filters ) {
   const filtersArray = [];
   _.forEach( filters, function(value, param) {
-    const phrase = `${ param } LIKE '${ value }%'`;
+    const table = tables[ param ];
+    const phrase = `${ table }.${ param } LIKE '%${ value }%'`;
     filtersArray.push( phrase );
   })
   return filtersArray.length > 1 ?
