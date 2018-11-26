@@ -64,8 +64,8 @@ app.get('/laus/download', (req, res) => {
     res.status(404).send('Sorry, need to add filters!');
     return;
   }
-
-  getSurveyWithValues( page, filters, (err, dbRes) => {
+  const isDownload = true;
+  getSurveyWithValues( isDownload, page, filters, (err, dbRes) => {
     if ( err ) {
       console.log('err', err);
       res.status(400).send('Invalid Filter');
@@ -91,7 +91,8 @@ app.get('/laus', (req, res) => {
   const page = req.query.page || 0;
   const filters = collectFilters(req.query);
 
-  getSurveyWithValues( page, filters, (err, dbRes) => {
+  const isDownload = false;
+  getSurveyWithValues( isDownload, page, filters, (err, dbRes) => {
     if ( err ) {
       console.log('err', err);
       res.status(400).send('Invalid Filter');

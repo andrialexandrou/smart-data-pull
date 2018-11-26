@@ -55,15 +55,21 @@ function createQuery( filters ) {
   if ( filters ) {
     baseQuery += createWhereClause( filters );
   }
+  return baseQuery;
   return baseQuery += ` LIMIT $1 OFFSET $2`;
 }
 
 const limit = 100;
 
-module.exports = (page, filters, cb) => {
-  const offset = page * limit;
-  const query = createQuery( filters );
-  return client.query( query,
-    [limit, offset],
-    cb );
+module.exports = (isDownload, page, filters, cb) => {
+  if ( isDownload ) {
+    const query = createQuery( filters );
+    return client.query( query, cb );
+  } else {
+    const offset = page * limit;
+    const query = createQuery( filters );
+    return client.query( query + ' LIMIT $1 OFFSET $2',
+      [limit, offset],
+      cb );
+  }
 };
