@@ -29,8 +29,9 @@ const lausFilters = {
 function collectFilters( queryParams ) {
   const thisRequest = {};
   _.forEach( queryParams, function(value, param) {
+    const values = value.split(',');
     if ( lausFilters[ param ] ) {
-      thisRequest[ param ] = value;
+      thisRequest[ param ] = values;
     }
   })
   return !_.isEmpty( thisRequest ) && thisRequest;
@@ -50,8 +51,6 @@ function convertToCsv( arrayOfInfo ) {
     'value'
   ];
   const options = { fields: fields };
-  // console.log('stuff?', typeof arrayOfInfo, arrayOfInfo.length);
-  // console.log(arrayOfInfo[ 0 ]);
   return createCsv( arrayOfInfo, options );
 }
 

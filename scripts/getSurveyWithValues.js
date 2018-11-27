@@ -23,10 +23,12 @@ const tables = {
 
 function createWhereClause( filters ) {
   const filtersArray = [];
-  _.forEach( filters, function(value, param) {
+  _.forEach( filters, function(values, param) {
     const table = tables[ param ];
-    const phrase = `${ table }.${ param } LIKE '%${ value }%'`;
-    filtersArray.push( phrase );
+    const phrases = values.map( value => {
+      return `${ table }.${ param } LIKE '%${ value }%'`;
+    })
+    filtersArray.push( phrases.join( ' OR ') );
   })
   return filtersArray.length > 1 ?
     ` WHERE ${ filtersArray.join( ' AND ' ) }` :
