@@ -29,7 +29,7 @@ const lausFilters = {
 function collectFilters( queryParams ) {
   const thisRequest = {};
   _.forEach( queryParams, function(value, param) {
-    const values = value.split(',');
+    const values = value.split('|');
     if ( lausFilters[ param ] ) {
       thisRequest[ param ] = values;
     }
