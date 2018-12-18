@@ -3,7 +3,7 @@ const fs = require( 'fs' );
 const { Pool, Client } = require( 'pg' );
 const _ = require( 'lodash' );
 
-const dbSecrets = require( '../config/dbConfig' );
+const dbSecrets = require( '../../config/dbConfig' );
 const client = new Client( dbSecrets );
 
 client.connect();

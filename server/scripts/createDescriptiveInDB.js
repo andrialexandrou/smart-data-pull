@@ -1,5 +1,5 @@
 const { Client } = require( 'pg' );
-const dbSecrets = require( './config/dbConfig' );
+const dbSecrets = require( '../config/dbConfig' );
 
 const client = new Client( dbSecrets );
 
