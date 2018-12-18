@@ -26,7 +26,11 @@ function createWhereClause( filters ) {
   _.forEach( filters, function(values, param) {
     const table = tables[ param ];
     const phrases = values.map( value => {
-      return `${ table }.${ param } LIKE '%${ value }%'`;
+      if ( param === 'area' ) {
+        return `${ table }.${ param } LIKE '${ value }'`;
+      } else {
+        return `${ table }.${ param } LIKE '%${ value }%'`;
+      }
     })
     filtersArray.push( phrases.join( ' OR ') );
   })

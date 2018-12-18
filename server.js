@@ -1,17 +1,20 @@
 const fs = require('fs');
-
 const express = require('express');
 const createCsv = require('json2csv').parse;
 const app = express();
 const port = 4000;
 
 const getSurveyWithValues = require('./scripts/getSurveyWithValues');
+const getSuggestions = require('./scripts/getSuggestions');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
+// SELECT COUNT(*)
+// 	FROM public.timewise_measures
+// 	WHERE period='M13';
 
 const _ = require('lodash');
 
@@ -70,10 +73,10 @@ app.get('/laus/download', (req, res) => {
       res.status(400).send('Invalid Filter');
     }
     if ( dbRes && dbRes.rows ) {
-      // conver to CSV
+
       const csv = convertToCsv( dbRes.rows );
       if ( err ) res.status(500).send('Problem creating CSV on server.');
-      // fs writeFile
+
       fs.writeFile( csvFileName, csv, err => {
         if ( err ) res.status(400).send('Problem writing to file!');
         res.download( csvFileName, 'laus.csv');
@@ -83,6 +86,16 @@ app.get('/laus/download', (req, res) => {
     } else {
       res.status(200).send('No results! No filter?')
     }
+  } );
+})
+
+app.get('/laus/suggest', (req, res) => {
+  const geography = req.query.geo;
+
+  getSuggestions( geography, (err, dbRes) => {
+    if ( err ) console.log('[/laus/suggest]', err);
+    const rows = dbRes.rows;
+    res.status(200).send( rows );
   } );
 })
 

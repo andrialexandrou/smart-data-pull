@@ -13,9 +13,14 @@ function request( seriesArray, startYear, endYear ) {
   const urlPath = "https://api.bls.gov/publicAPI/v2/timeseries/data/";
   // split into 50 hombre
   console.log('REQUESTING', startYear, endYear);
+  if ( !seriesArray ) {
+    return;
+  }
+
   return axios.post( urlPath, {
     "seriesid": seriesArray,
     "registrationkey": blsConfig.apiKey,
+    "annualaverage": true,
     "startyear": startYear.toString(),
     "endyear": endYear.toString()
   } )
@@ -41,19 +46,25 @@ var monthEnums = {
   "September": "09",
   "October": "10",
   "November": "11",
-  "December": "12"
+  "December": "12",
+  "Annual": "13"
 }
 
 function createISOString( timePeriod ) {
   var year = timePeriod.year;
   var month = monthEnums[ timePeriod.periodName ];
+
   if ( !month ) {
     console.log( "Couldn't find a month, hombre", timePeriod );
     if ( false /* is annual average */ ) {
       return year;
     }
   }
-  return year + "-" + month + "-01";
+  if ( month === "13" ) {
+    return year;
+  } else {
+    return year + "-" + month + "-01";
+  }
 }
 
 function handleResponse( res ) {
@@ -70,10 +81,14 @@ function handleResponse( res ) {
       process.exit();
     }
     if ( res.data.message[ 0 ].includes('No Data Available') ) {
-      return;
+      console.log('Message from BLS:\n\t', res.data.message.join('\n\t'));
     }
   }
 
+  if ( !res.data.Results ) {
+    console.log('No data\n', res);
+    return;
+  }
   var results = res.data.Results.series;
 
   results.forEach( result => {
@@ -118,17 +133,27 @@ function requestForFourSets( seriesIds ) {
     var nextSet = seriesIds.splice( 0, 40 );
     setsOfFourty.push( nextSet );
   }
+  var indexOf = 0;
+  setsOfFourty.forEach( function(set, index) {
+    if ( set.includes('LAUCS362199600000004')) {
+      indexOf = index;
+    }
+  })
+  console.log('index', indexOf);
+  var taResta = setsOfFourty.splice(indexOf);
   (function onRequestComplete() {
-    if ( setsOfFourty.length <= 0 ) {
+    if ( taResta.length <= 0 ) {
       return;
     }
 
-    var setToRequest = setsOfFourty.shift();
+    var setToRequest = taResta.shift();
+    // var setToRequest = setsOfFourty.shift();
     console.log('REQUESTING NEXT SET FOR ALL FOUR TIME PERIODs');
+
     request( setToRequest, 2003, 2018 )
       .then( () => request( setToRequest, 1983, 2002 ) )
-      // .then( () => request( setToRequest, 1963, 1982 ) )
-      // .then( () => request( setToRequest, 1943, 1962 ) )
+      .then( () => request( setToRequest, 1963, 1982 ) )
+      .then( () => request( setToRequest, 1943, 1962 ) )
       .then( () => onRequestComplete() );
 
   })();
@@ -137,11 +162,12 @@ function requestForFourSets( seriesIds ) {
 fs.readFile( './lists/seriesIds_1.json', (err, res) => {
   if ( err ) console.log('err', err);
   var jsonObject = JSON.parse( res );
-  var firstSet = jsonObject.one;
-  // var secondSet = jsonObject.two; // only first 2 year chunks
-  // var thirdSet = jsonObject.three; // only first 2 year chunks
-  // var fourthSet = jsonObject.four; // array partially completed
+  // var zerothSet = jsonObject.zero; DONE DONE
+  // var firstSet = jsonObject.one; DONE DONE
+  // var secondSet = jsonObject.two; DONE DONE
+  // var thirdSet = jsonObject.three; DONE DONE
+  var fourthSet = jsonObject.four; // array partially completed
   // var fifthSet = jsonObject.five; // array partially completed
   // var lastSet = jsonObject.six;
-  requestForFourSets( firstSet );
+  requestForFourSets( fourthSet );
 } )
