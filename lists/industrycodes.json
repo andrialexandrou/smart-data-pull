@@ -1,0 +1,1382 @@
+[
+  {
+    "code": "00000000",
+    "area": "Total Nonfarm"
+  },
+  {
+    "code": "05000000",
+    "area": "Total Private"
+  },
+  {
+    "code": "06000000",
+    "area": "Goods Producing"
+  },
+  {
+    "code": "07000000",
+    "area": "Service-Providing"
+  },
+  {
+    "code": "08000000",
+    "area": "Private Service Providing"
+  },
+  {
+    "code": "10000000",
+    "area": "Mining and Logging"
+  },
+  {
+    "code": "10113300",
+    "area": "Logging"
+  },
+  {
+    "code": "10210000",
+    "area": "Mining, Quarrying, and Oil and Gas Extraction"
+  },
+  {
+    "code": "10211000",
+    "area": "Oil and Gas Extraction"
+  },
+  {
+    "code": "10212000",
+    "area": "Mining (except Oil and Gas)"
+  },
+  {
+    "code": "10212100",
+    "area": "Coal Mining"
+  },
+  {
+    "code": "10212200",
+    "area": "Metal Ore Mining"
+  },
+  {
+    "code": "10213000",
+    "area": "Support Activities for Mining"
+  },
+  {
+    "code": "10213111",
+    "area": "Drilling Oil and Gas Wells"
+  },
+  {
+    "code": "10213112",
+    "area": "Support Activities for Oil and Gas Operations"
+  },
+  {
+    "code": "15000000",
+    "area": "Mining, Logging and Construction"
+  },
+  {
+    "code": "20000000",
+    "area": "Construction"
+  },
+  {
+    "code": "20236000",
+    "area": "Construction of Buildings"
+  },
+  {
+    "code": "20236100",
+    "area": "Residential Building Construction"
+  },
+  {
+    "code": "20236200",
+    "area": "Nonresidential Building Construction"
+  },
+  {
+    "code": "20237000",
+    "area": "Heavy and Civil Engineering Construction"
+  },
+  {
+    "code": "20237100",
+    "area": "Utility System Construction"
+  },
+  {
+    "code": "20237200",
+    "area": "Land Subdivision"
+  },
+  {
+    "code": "20237300",
+    "area": "Highway, Street, and Bridge Construction"
+  },
+  {
+    "code": "20237900",
+    "area": "Other Heavy and Civil Engineering Construction"
+  },
+  {
+    "code": "20238000",
+    "area": "Specialty Trade Contractors"
+  },
+  {
+    "code": "20238100",
+    "area": "Foundation, Structure, and Building Exterior Contractors"
+  },
+  {
+    "code": "20238200",
+    "area": "Building Equipment Contractors"
+  },
+  {
+    "code": "20238300",
+    "area": "Building Finishing Contractors"
+  },
+  {
+    "code": "20238900",
+    "area": "Other Specialty Trade Contractors"
+  },
+  {
+    "code": "30000000",
+    "area": "Manufacturing"
+  },
+  {
+    "code": "31000000",
+    "area": "Durable Goods"
+  },
+  {
+    "code": "31321000",
+    "area": "Wood Product Manufacturing"
+  },
+  {
+    "code": "31321100",
+    "area": "Sawmills and Wood Preservation"
+  },
+  {
+    "code": "31321200",
+    "area": "Veneer, Plywood, and Engineered Wood Product Manufacturing"
+  },
+  {
+    "code": "31321900",
+    "area": "Other Wood Product Manufacturing"
+  },
+  {
+    "code": "31327000",
+    "area": "Nonmetallic Mineral Product Manufacturing"
+  },
+  {
+    "code": "31327300",
+    "area": "Cement and Concrete Product Manufacturing"
+  },
+  {
+    "code": "31331000",
+    "area": "Primary Metal Manufacturing"
+  },
+  {
+    "code": "31331100",
+    "area": "Iron and Steel Mills and Ferroalloy Manufacturing"
+  },
+  {
+    "code": "31331500",
+    "area": "Foundries"
+  },
+  {
+    "code": "31332000",
+    "area": "Fabricated Metal Product Manufacturing"
+  },
+  {
+    "code": "31332300",
+    "area": "Architectural and Structural Metals Manufacturing"
+  },
+  {
+    "code": "31332700",
+    "area": "Machine Shops; Turned Product; and Screw, Nut, and Bolt Manufacturing"
+  },
+  {
+    "code": "31332900",
+    "area": "Other Fabricated Metal Product Manufacturing"
+  },
+  {
+    "code": "31333000",
+    "area": "Machinery Manufacturing"
+  },
+  {
+    "code": "31333100",
+    "area": "Agriculture, Construction, and Mining Machinery Manufacturing"
+  },
+  {
+    "code": "31333200",
+    "area": "Industrial Machinery Manufacturing"
+  },
+  {
+    "code": "31333300",
+    "area": "Commercial and Service Industry Machinery Manufacturing"
+  },
+  {
+    "code": "31333500",
+    "area": "Metalworking Machinery Manufacturing"
+  },
+  {
+    "code": "31333600",
+    "area": "Engine, Turbine, and Power Transmission Equipment Manufacturing"
+  },
+  {
+    "code": "31333900",
+    "area": "Other General Purpose Machinery Manufacturing"
+  },
+  {
+    "code": "31334000",
+    "area": "Computer and Electronic Product Manufacturing"
+  },
+  {
+    "code": "31334100",
+    "area": "Computer and Peripheral Equipment Manufacturing"
+  },
+  {
+    "code": "31334111",
+    "area": "Electronic Computer Manufacturing"
+  },
+  {
+    "code": "31334200",
+    "area": "Communications Equipment Manufacturing"
+  },
+  {
+    "code": "31334400",
+    "area": "Semiconductor and Other Electronic Component Manufacturing"
+  },
+  {
+    "code": "31334412",
+    "area": "Bare Printed Circuit Board Manufacturing"
+  },
+  {
+    "code": "31334413",
+    "area": "Semiconductor and Related Device Manufacturing"
+  },
+  {
+    "code": "31334500",
+    "area": "Navigational, Measuring, Electromedical, and Control Instruments Manufacturing"
+  },
+  {
+    "code": "31335000",
+    "area": "Electrical Equipment, Appliance, and Component Manufacturing"
+  },
+  {
+    "code": "31335200",
+    "area": "Household Appliance Manufacturing"
+  },
+  {
+    "code": "31335300",
+    "area": "Electrical Equipment Manufacturing"
+  },
+  {
+    "code": "31336000",
+    "area": "Transportation Equipment Manufacturing"
+  },
+  {
+    "code": "31336100",
+    "area": "Motor Vehicle Manufacturing"
+  },
+  {
+    "code": "31336200",
+    "area": "Motor Vehicle Body and Trailer Manufacturing"
+  },
+  {
+    "code": "31336300",
+    "area": "Motor Vehicle Parts Manufacturing"
+  },
+  {
+    "code": "31336400",
+    "area": "Aerospace Product and Parts Manufacturing"
+  },
+  {
+    "code": "31336600",
+    "area": "Ship and Boat Building"
+  },
+  {
+    "code": "31337000",
+    "area": "Furniture and Related Product Manufacturing"
+  },
+  {
+    "code": "31337100",
+    "area": "Household and Institutional Furniture and Kitchen Cabinet Manufacturing"
+  },
+  {
+    "code": "31339000",
+    "area": "Miscellaneous durable goods manufacturing"
+  },
+  {
+    "code": "31339100",
+    "area": "Medical Equipment and Supplies Manufacturing"
+  },
+  {
+    "code": "31339900",
+    "area": "Other Miscellaneous Manufacturing"
+  },
+  {
+    "code": "31339910",
+    "area": "Jewelry and Silverware Manufacturing"
+  },
+  {
+    "code": "32000000",
+    "area": "Non-Durable Goods"
+  },
+  {
+    "code": "32311000",
+    "area": "Food Manufacturing"
+  },
+  {
+    "code": "32311200",
+    "area": "Grain and Oilseed Milling"
+  },
+  {
+    "code": "32311400",
+    "area": "Fruit and Vegetable Preserving and Specialty Food Manufacturing"
+  },
+  {
+    "code": "32311500",
+    "area": "Dairy Product Manufacturing"
+  },
+  {
+    "code": "32311600",
+    "area": "Animal Slaughtering and Processing"
+  },
+  {
+    "code": "32311700",
+    "area": "Seafood Product Preparation and Packaging"
+  },
+  {
+    "code": "32311800",
+    "area": "Bakeries and Tortilla Manufacturing"
+  },
+  {
+    "code": "32311900",
+    "area": "Other Food Manufacturing"
+  },
+  {
+    "code": "32312000",
+    "area": "Beverage and Tobacco Product Manufacturing"
+  },
+  {
+    "code": "32312100",
+    "area": "Beverage Manufacturing"
+  },
+  {
+    "code": "32312200",
+    "area": "Tobacco Manufacturing"
+  },
+  {
+    "code": "32313000",
+    "area": "Textile Mills"
+  },
+  {
+    "code": "32313100",
+    "area": "Fiber, Yarn, and Thread Mills"
+  },
+  {
+    "code": "32313200",
+    "area": "Fabric Mills"
+  },
+  {
+    "code": "32313300",
+    "area": "Textile and Fabric Finishing and Fabric Coating Mills"
+  },
+  {
+    "code": "32314000",
+    "area": "Textile Product Mills"
+  },
+  {
+    "code": "32314100",
+    "area": "Textile Furnishings Mills"
+  },
+  {
+    "code": "32315000",
+    "area": "Apparel Manufacturing"
+  },
+  {
+    "code": "32315100",
+    "area": "Apparel Knitting Mills"
+  },
+  {
+    "code": "32315200",
+    "area": "Cut and Sew Apparel Manufacturing"
+  },
+  {
+    "code": "32322000",
+    "area": "Paper Manufacturing"
+  },
+  {
+    "code": "32322100",
+    "area": "Pulp, Paper, and Paperboard Mills"
+  },
+  {
+    "code": "32322200",
+    "area": "Converted Paper Product Manufacturing"
+  },
+  {
+    "code": "32323000",
+    "area": "Printing and Related Support Activities"
+  },
+  {
+    "code": "32324000",
+    "area": "Petroleum and Coal Products Manufacturing"
+  },
+  {
+    "code": "32325000",
+    "area": "Chemical Manufacturing"
+  },
+  {
+    "code": "32325100",
+    "area": "Basic Chemical Manufacturing"
+  },
+  {
+    "code": "32325400",
+    "area": "Pharmaceutical and Medicine Manufacturing"
+  },
+  {
+    "code": "32325600",
+    "area": "Soap, Cleaning Compound, and Toilet Preparation Manufacturing"
+  },
+  {
+    "code": "32326000",
+    "area": "Plastics and Rubber Products Manufacturing"
+  },
+  {
+    "code": "32326100",
+    "area": "Plastics Product Manufacturing"
+  },
+  {
+    "code": "32326200",
+    "area": "Rubber Product Manufacturing"
+  },
+  {
+    "code": "40000000",
+    "area": "Trade, Transportation, and Utilities"
+  },
+  {
+    "code": "41000000",
+    "area": "Wholesale Trade"
+  },
+  {
+    "code": "41423000",
+    "area": "Merchant Wholesalers, Durable Goods"
+  },
+  {
+    "code": "41423100",
+    "area": "Motor Vehicle and Motor Vehicle Parts and Supplies Merchant Wholesalers"
+  },
+  {
+    "code": "41423200",
+    "area": "Furniture and Home Furnishing Merchant Wholesalers"
+  },
+  {
+    "code": "41423300",
+    "area": "Lumber and Other Construction Materials Merchant Wholesalers"
+  },
+  {
+    "code": "41423400",
+    "area": "Professional and Commercial Equipment and Supplies Merchant Wholesalers"
+  },
+  {
+    "code": "41423600",
+    "area": "Household Appliances and Electrical and Electronic Goods Merchant Wholesalers"
+  },
+  {
+    "code": "41423700",
+    "area": "Hardware, and Plumbing and Heating Equipment and Supplies Merchant Whole"
+  },
+  {
+    "code": "41423800",
+    "area": "Machinery, Equipment, and Supplies Merchant Wholesalers"
+  },
+  {
+    "code": "41423900",
+    "area": "Miscellaneous Durable Goods Merchant Wholesalers"
+  },
+  {
+    "code": "41424000",
+    "area": "Merchant Wholesalers, Nondurable Goods"
+  },
+  {
+    "code": "41424100",
+    "area": "Paper and Paper Product Merchant Wholesalers"
+  },
+  {
+    "code": "41424300",
+    "area": "Apparel, Piece Goods, and Notions Merchant Wholesalers"
+  },
+  {
+    "code": "41424400",
+    "area": "Grocery and Related Product Merchant Wholesalers"
+  },
+  {
+    "code": "41424600",
+    "area": "Chemical and Allied Products Merchant Wholesalers"
+  },
+  {
+    "code": "41424900",
+    "area": "Miscellaneous Nondurable Goods Merchant Wholesalers"
+  },
+  {
+    "code": "41425000",
+    "area": "Wholesale Electronic Markets and Agents and Brokers"
+  },
+  {
+    "code": "42000000",
+    "area": "Retail Trade"
+  },
+  {
+    "code": "42441000",
+    "area": "Motor Vehicle and Parts Dealers"
+  },
+  {
+    "code": "42441100",
+    "area": "Automobile Dealers"
+  },
+  {
+    "code": "42441200",
+    "area": "Other Motor Vehicle Dealers"
+  },
+  {
+    "code": "42441300",
+    "area": "Automotive Parts, Accessories, and Tire Stores"
+  },
+  {
+    "code": "42442000",
+    "area": "Furniture and Home Furnishings Stores"
+  },
+  {
+    "code": "42442100",
+    "area": "Furniture Stores"
+  },
+  {
+    "code": "42442200",
+    "area": "Home Furnishings Stores"
+  },
+  {
+    "code": "42443000",
+    "area": "Electronics and Appliance Stores"
+  },
+  {
+    "code": "42444000",
+    "area": "Building Material and Garden Equipment and Supplies Dealers"
+  },
+  {
+    "code": "42444100",
+    "area": "Building Material and Supplies Dealers"
+  },
+  {
+    "code": "42445000",
+    "area": "Food and Beverage Stores"
+  },
+  {
+    "code": "42445100",
+    "area": "Grocery Stores"
+  },
+  {
+    "code": "42445200",
+    "area": "Specialty Food Stores"
+  },
+  {
+    "code": "42445300",
+    "area": "Beer, Wine, and Liquor Stores"
+  },
+  {
+    "code": "42446000",
+    "area": "Health and Personal Care Stores"
+  },
+  {
+    "code": "42447000",
+    "area": "Gasoline Stations"
+  },
+  {
+    "code": "42448000",
+    "area": "Clothing and Clothing Accessories Stores"
+  },
+  {
+    "code": "42448100",
+    "area": "Clothing Stores"
+  },
+  {
+    "code": "42448300",
+    "area": "Jewelry, Luggage, and Leather Goods Stores"
+  },
+  {
+    "code": "42451000",
+    "area": "Sporting Goods, Hobby, Musical Instrument, and Book Stores"
+  },
+  {
+    "code": "42451100",
+    "area": "Sporting Goods, Hobby, and Musical Instrument Stores"
+  },
+  {
+    "code": "42451200",
+    "area": "Book Stores and News Dealers"
+  },
+  {
+    "code": "42452000",
+    "area": "General Merchandise Stores"
+  },
+  {
+    "code": "42452200",
+    "area": "Department Stores"
+  },
+  {
+    "code": "42452300",
+    "area": "General Merchandise Stores, including Warehouse Clubs and Supercenters"
+  },
+  {
+    "code": "42453000",
+    "area": "Miscellaneous Store Retailers"
+  },
+  {
+    "code": "42453200",
+    "area": "Office Supplies, Stationery, and Gift Stores"
+  },
+  {
+    "code": "42453300",
+    "area": "Used Merchandise Stores"
+  },
+  {
+    "code": "42453900",
+    "area": "Other Miscellaneous Store Retailers"
+  },
+  {
+    "code": "42454000",
+    "area": "Nonstore Retailers"
+  },
+  {
+    "code": "42454100",
+    "area": "Electronic Shopping and Mail-Order Houses"
+  },
+  {
+    "code": "43000000",
+    "area": "Transportation, Warehousing, and Utilities"
+  },
+  {
+    "code": "43220000",
+    "area": "Utilities"
+  },
+  {
+    "code": "43221100",
+    "area": "Electric Power Generation, Transmission and Distribution"
+  },
+  {
+    "code": "43221200",
+    "area": "Natural Gas Distribution"
+  },
+  {
+    "code": "43400089",
+    "area": "Transportation and Warehousing"
+  },
+  {
+    "code": "43481000",
+    "area": "Air Transportation"
+  },
+  {
+    "code": "43481100",
+    "area": "Scheduled Air Transportation"
+  },
+  {
+    "code": "43482000",
+    "area": "Rail Transportation"
+  },
+  {
+    "code": "43483000",
+    "area": "Water Transportation"
+  },
+  {
+    "code": "43484000",
+    "area": "Truck Transportation"
+  },
+  {
+    "code": "43484100",
+    "area": "General Freight Trucking"
+  },
+  {
+    "code": "43484200",
+    "area": "Specialized Freight Trucking"
+  },
+  {
+    "code": "43485000",
+    "area": "Transit and Ground Passenger Transportation"
+  },
+  {
+    "code": "43485300",
+    "area": "Taxi and Limousine Service"
+  },
+  {
+    "code": "43485400",
+    "area": "School and Employee Bus Transportation"
+  },
+  {
+    "code": "43486000",
+    "area": "Pipeline Transportation"
+  },
+  {
+    "code": "43488000",
+    "area": "Support Activities for Transportation"
+  },
+  {
+    "code": "43488100",
+    "area": "Support Activities for Air Transportation"
+  },
+  {
+    "code": "43488300",
+    "area": "Support Activities for Water Transportation"
+  },
+  {
+    "code": "43488400",
+    "area": "Support Activities for Road Transportation"
+  },
+  {
+    "code": "43488500",
+    "area": "Freight Transportation Arrangement"
+  },
+  {
+    "code": "43492000",
+    "area": "Couriers and Messengers"
+  },
+  {
+    "code": "43493000",
+    "area": "Warehousing and Storage"
+  },
+  {
+    "code": "50000000",
+    "area": "Information"
+  },
+  {
+    "code": "50511000",
+    "area": "Publishing Industries (except Internet)"
+  },
+  {
+    "code": "50511100",
+    "area": "Newspaper, Periodical, Book, and Directory Publishers"
+  },
+  {
+    "code": "50511200",
+    "area": "Software Publishers"
+  },
+  {
+    "code": "50512000",
+    "area": "Motion Picture and Sound Recording Industries"
+  },
+  {
+    "code": "50512100",
+    "area": "Motion Picture and Video Industries"
+  },
+  {
+    "code": "50512110",
+    "area": "Motion Picture and Video Production"
+  },
+  {
+    "code": "50515000",
+    "area": "Broadcasting (except Internet)"
+  },
+  {
+    "code": "50515100",
+    "area": "Radio and Television Broadcasting"
+  },
+  {
+    "code": "50515200",
+    "area": "Cable and Other Subscription Programming"
+  },
+  {
+    "code": "50517000",
+    "area": "Telecommunications"
+  },
+  {
+    "code": "50517300",
+    "area": "Wired and Wireless Telecommunications Carriers"
+  },
+  {
+    "code": "50517311",
+    "area": "Wired Telecommunications Carriers"
+  },
+  {
+    "code": "50517312",
+    "area": "Wireless Telecommunications Carriers (except Satellite)"
+  },
+  {
+    "code": "50518000",
+    "area": "Data Processing, Hosting, and Related Services"
+  },
+  {
+    "code": "50519000",
+    "area": "Other Information Services"
+  },
+  {
+    "code": "55000000",
+    "area": "Financial Activities"
+  },
+  {
+    "code": "55520000",
+    "area": "Finance and Insurance"
+  },
+  {
+    "code": "55522000",
+    "area": "Credit Intermediation and Related Activities including Monetary Authorities - Central Bank"
+  },
+  {
+    "code": "55522100",
+    "area": "Depository Credit Intermediation including Monetary Authorities - Central Bank"
+  },
+  {
+    "code": "55522110",
+    "area": "Commercial Banking"
+  },
+  {
+    "code": "55522200",
+    "area": "Nondepository Credit Intermediation"
+  },
+  {
+    "code": "55522300",
+    "area": "Activities Related to Credit Intermediation"
+  },
+  {
+    "code": "55523000",
+    "area": "Financial Investments and Related Activities including Financial Vehicles"
+  },
+  {
+    "code": "55523100",
+    "area": "Securities and Commodity Contracts Intermediation and Brokerage"
+  },
+  {
+    "code": "55523110",
+    "area": "Investment Banking and Securities Dealing"
+  },
+  {
+    "code": "55523120",
+    "area": "Securities Brokerage"
+  },
+  {
+    "code": "55523900",
+    "area": "Other Financial Investment Activities including Financial Vehicles"
+  },
+  {
+    "code": "55524000",
+    "area": "Insurance Carriers and Related Activities"
+  },
+  {
+    "code": "55524100",
+    "area": "Insurance Carriers"
+  },
+  {
+    "code": "55524113",
+    "area": "Direct Life Insurance Carriers"
+  },
+  {
+    "code": "55524114",
+    "area": "Direct Health and Medical Insurance Carriers"
+  },
+  {
+    "code": "55524126",
+    "area": "Direct Property and Casualty Insurance Carriers"
+  },
+  {
+    "code": "55524200",
+    "area": "Agencies, Brokerages, and Other Insurance Related Activities"
+  },
+  {
+    "code": "55530000",
+    "area": "Real Estate and Rental and Leasing"
+  },
+  {
+    "code": "55531000",
+    "area": "Real Estate"
+  },
+  {
+    "code": "55531100",
+    "area": "Lessors of Real Estate"
+  },
+  {
+    "code": "55531200",
+    "area": "Offices of Real Estate Agents and Brokers"
+  },
+  {
+    "code": "55531300",
+    "area": "Activities Related to Real Estate"
+  },
+  {
+    "code": "55532000",
+    "area": "Rental and Leasing Services"
+  },
+  {
+    "code": "55532100",
+    "area": "Automotive Equipment Rental and Leasing"
+  },
+  {
+    "code": "55532200",
+    "area": "Consumer Goods Rental"
+  },
+  {
+    "code": "55532300",
+    "area": "General Rental Centers"
+  },
+  {
+    "code": "55532400",
+    "area": "Commercial and Industrial Machinery and Equipment Rental and Leasing"
+  },
+  {
+    "code": "60000000",
+    "area": "Professional and Business Services"
+  },
+  {
+    "code": "60540000",
+    "area": "Professional, Scientific, and Technical Services"
+  },
+  {
+    "code": "60541100",
+    "area": "Legal Services"
+  },
+  {
+    "code": "60541200",
+    "area": "Accounting, Tax Preparation, Bookkeeping, and Payroll Services"
+  },
+  {
+    "code": "60541300",
+    "area": "Architectural, Engineering, and Related Services"
+  },
+  {
+    "code": "60541400",
+    "area": "Specialized Design Services"
+  },
+  {
+    "code": "60541500",
+    "area": "Computer Systems Design and Related Services"
+  },
+  {
+    "code": "60541600",
+    "area": "Management, Scientific, and Technical Consulting Services"
+  },
+  {
+    "code": "60541700",
+    "area": "Scientific Research and Development Services"
+  },
+  {
+    "code": "60541800",
+    "area": "Advertising, Public Relations, and Related Services"
+  },
+  {
+    "code": "60541900",
+    "area": "Other Professional, Scientific, and Technical Services"
+  },
+  {
+    "code": "60550000",
+    "area": "Management of Companies and Enterprises"
+  },
+  {
+    "code": "60560000",
+    "area": "Administrative and Support and Waste Management and Remediation Services"
+  },
+  {
+    "code": "60561000",
+    "area": "Administrative and Support Services"
+  },
+  {
+    "code": "60561100",
+    "area": "Office Administrative Services"
+  },
+  {
+    "code": "60561200",
+    "area": "Facilities Support Services"
+  },
+  {
+    "code": "60561300",
+    "area": "Employment Services"
+  },
+  {
+    "code": "60561320",
+    "area": "Temporary Help Services"
+  },
+  {
+    "code": "60561400",
+    "area": "Business Support Services"
+  },
+  {
+    "code": "60561420",
+    "area": "Telephone Call Centers"
+  },
+  {
+    "code": "60561500",
+    "area": "Travel Arrangement and Reservation Services"
+  },
+  {
+    "code": "60561600",
+    "area": "Investigation and Security Services"
+  },
+  {
+    "code": "60561610",
+    "area": "Investigation, Guard, and Armored Car Services"
+  },
+  {
+    "code": "60561700",
+    "area": "Services to Buildings and Dwellings"
+  },
+  {
+    "code": "60561900",
+    "area": "Other Support Services"
+  },
+  {
+    "code": "60562000",
+    "area": "Waste Management and Remediation Services"
+  },
+  {
+    "code": "65000000",
+    "area": "Education and Health Services"
+  },
+  {
+    "code": "65610000",
+    "area": "Educational Services"
+  },
+  {
+    "code": "65611100",
+    "area": "Elementary and Secondary Schools"
+  },
+  {
+    "code": "65611200",
+    "area": "Junior Colleges"
+  },
+  {
+    "code": "65611300",
+    "area": "Colleges, Universities, and Professional Schools"
+  },
+  {
+    "code": "65611600",
+    "area": "Other Schools and Instruction"
+  },
+  {
+    "code": "65620000",
+    "area": "Health Care and Social Assistance"
+  },
+  {
+    "code": "65621000",
+    "area": "Ambulatory Health Care Services"
+  },
+  {
+    "code": "65621100",
+    "area": "Offices of Physicians"
+  },
+  {
+    "code": "65621200",
+    "area": "Offices of Dentists"
+  },
+  {
+    "code": "65621300",
+    "area": "Offices of Other Health Practitioners"
+  },
+  {
+    "code": "65621400",
+    "area": "Outpatient Care Centers"
+  },
+  {
+    "code": "65621500",
+    "area": "Medical and Diagnostic Laboratories"
+  },
+  {
+    "code": "65621600",
+    "area": "Home Health Care Services"
+  },
+  {
+    "code": "65621900",
+    "area": "Other Ambulatory Health Care Services"
+  },
+  {
+    "code": "65622000",
+    "area": "Hospitals"
+  },
+  {
+    "code": "65622100",
+    "area": "General Medical and Surgical Hospitals"
+  },
+  {
+    "code": "65622200",
+    "area": "Psychiatric and Substance Abuse Hospitals"
+  },
+  {
+    "code": "65622300",
+    "area": "Specialty (except Psychiatric and Substance Abuse) Hospitals"
+  },
+  {
+    "code": "65623000",
+    "area": "Nursing and Residential Care Facilities"
+  },
+  {
+    "code": "65623100",
+    "area": "Nursing Care Facilities (Skilled Nursing Facilities)"
+  },
+  {
+    "code": "65623200",
+    "area": "Residential Intellectual and Developmental Disability, Mental Health and Substance Abuse Facilities"
+  },
+  {
+    "code": "65623300",
+    "area": "Continuing Care Retirement Communities and Assisted Living Facilities for the Elderly"
+  },
+  {
+    "code": "65623900",
+    "area": "Other Residential Care Facilities"
+  },
+  {
+    "code": "65624000",
+    "area": "Social Assistance"
+  },
+  {
+    "code": "65624100",
+    "area": "Individual and Family Services"
+  },
+  {
+    "code": "65624120",
+    "area": "Services for the Elderly and Persons with Disabilities"
+  },
+  {
+    "code": "65624200",
+    "area": "Community Food and Housing, and Emergency and Other Relief Services"
+  },
+  {
+    "code": "65624300",
+    "area": "Vocational Rehabilitation Services"
+  },
+  {
+    "code": "65624400",
+    "area": "Child Day Care Services"
+  },
+  {
+    "code": "70000000",
+    "area": "Leisure and Hospitality"
+  },
+  {
+    "code": "70710000",
+    "area": "Arts, Entertainment, and Recreation"
+  },
+  {
+    "code": "70711000",
+    "area": "Performing Arts, Spectator Sports, and Related Industries"
+  },
+  {
+    "code": "70711100",
+    "area": "Performing Arts Companies"
+  },
+  {
+    "code": "70711200",
+    "area": "Spectator Sports"
+  },
+  {
+    "code": "70711300",
+    "area": "Promoters of Performing Arts, Sports, and Similar Events"
+  },
+  {
+    "code": "70711500",
+    "area": "Independent Artists, Writers, and Performers"
+  },
+  {
+    "code": "70712000",
+    "area": "Museums, Historical Sites, and Similar Institutions"
+  },
+  {
+    "code": "70713000",
+    "area": "Amusement, Gambling, and Recreation Industries"
+  },
+  {
+    "code": "70713100",
+    "area": "Amusement Parks and Arcades"
+  },
+  {
+    "code": "70713200",
+    "area": "Gambling Industries"
+  },
+  {
+    "code": "70713900",
+    "area": "Other Amusement and Recreation Industries"
+  },
+  {
+    "code": "70713940",
+    "area": "Fitness and Recreational Sports Centers"
+  },
+  {
+    "code": "70720000",
+    "area": "Accommodation and Food Services"
+  },
+  {
+    "code": "70721000",
+    "area": "Accommodation"
+  },
+  {
+    "code": "70721100",
+    "area": "Traveler Accommodation"
+  },
+  {
+    "code": "70721110",
+    "area": "Hotels (except Casino Hotels) and Motels"
+  },
+  {
+    "code": "70721120",
+    "area": "Casino Hotels"
+  },
+  {
+    "code": "70722000",
+    "area": "Food Services and Drinking Places"
+  },
+  {
+    "code": "70722300",
+    "area": "Special Food Services"
+  },
+  {
+    "code": "70722400",
+    "area": "Drinking Places (Alcoholic Beverages)"
+  },
+  {
+    "code": "70722500",
+    "area": "Restaurants and Other Eating Places"
+  },
+  {
+    "code": "70722511",
+    "area": "Full-Service Restaurants"
+  },
+  {
+    "code": "70722590",
+    "area": "Limited-Service Restaurants and Other Eating Places"
+  },
+  {
+    "code": "80000000",
+    "area": "Other Services"
+  },
+  {
+    "code": "80811000",
+    "area": "Repair and Maintenance"
+  },
+  {
+    "code": "80811100",
+    "area": "Automotive Repair and Maintenance"
+  },
+  {
+    "code": "80811300",
+    "area": "Commercial and Industrial Machinery and Equipment (except Automotive and Electronic) Repair and Maintenance"
+  },
+  {
+    "code": "80811400",
+    "area": "Personal and Household Goods Repair and Maintenance"
+  },
+  {
+    "code": "80812000",
+    "area": "Personal and Laundry Services"
+  },
+  {
+    "code": "80812100",
+    "area": "Personal Care Services"
+  },
+  {
+    "code": "80812300",
+    "area": "Drycleaning and Laundry Services"
+  },
+  {
+    "code": "80812900",
+    "area": "Other Personal Services"
+  },
+  {
+    "code": "80813000",
+    "area": "Religious, Grantmaking, Civic, Professional, and Similar Organizations"
+  },
+  {
+    "code": "80813100",
+    "area": "Religious Organizations"
+  },
+  {
+    "code": "80813200",
+    "area": "Grantmaking and Giving Services"
+  },
+  {
+    "code": "80813300",
+    "area": "Social Advocacy Organizations"
+  },
+  {
+    "code": "80813400",
+    "area": "Civic and Social Organizations"
+  },
+  {
+    "code": "80813900",
+    "area": "Business, Professional, Labor, Political, and Similar Organizations"
+  },
+  {
+    "code": "90000000",
+    "area": "Government"
+  },
+  {
+    "code": "90910000",
+    "area": "Federal Government"
+  },
+  {
+    "code": "90912811",
+    "area": "National Security"
+  },
+  {
+    "code": "90912991",
+    "area": "Federal Government excluding Department of Defense"
+  },
+  {
+    "code": "90912993",
+    "area": "Federal Government excluding Postal Service"
+  },
+  {
+    "code": "90912994",
+    "area": "Federal Government excluding Postal Service, Department of Defense, Ship Building, and Hospitals"
+  },
+  {
+    "code": "90916220",
+    "area": "Federal Government Hospitals"
+  },
+  {
+    "code": "90919110",
+    "area": "Department of Defense"
+  },
+  {
+    "code": "90919118",
+    "area": "Department of Defense, including Ship Building"
+  },
+  {
+    "code": "90919119",
+    "area": "Department of Defense, including Ship Building and Hospitals"
+  },
+  {
+    "code": "90919120",
+    "area": "U.S. Postal Service"
+  },
+  {
+    "code": "90920000",
+    "area": "State Government"
+  },
+  {
+    "code": "90921611",
+    "area": "State Government Educational Services"
+  },
+  {
+    "code": "90922000",
+    "area": "State Government Excluding Education"
+  },
+  {
+    "code": "90922622",
+    "area": "State Government Hospitals"
+  },
+  {
+    "code": "90922991",
+    "area": "State Government excluding Educational Services and Hospitals"
+  },
+  {
+    "code": "90930000",
+    "area": "Local Government"
+  },
+  {
+    "code": "90931150",
+    "area": "Indian Tribes"
+  },
+  {
+    "code": "90931611",
+    "area": "Local Government Educational Services"
+  },
+  {
+    "code": "90932000",
+    "area": "Local Government excluding Educational Services"
+  },
+  {
+    "code": "90932480",
+    "area": "Transportation"
+  },
+  {
+    "code": "90932622",
+    "area": "Local Government Hospitals"
+  },
+  {
+    "code": "90936111",
+    "area": "Local Government Elementary and Secondary Education"
+  },
+  {
+    "code": "90940000",
+    "area": "Total State and Local Government"
+  },
+  {
+    "code": "90940001",
+    "area": "District of Columbia Government"
+  }
+]

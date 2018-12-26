@@ -1,7 +1,7 @@
 {
   "user": "andria",
   "host": "localhost",
-  "database": "virtualq_new_db",
+  "database": "tip_labor_statistics",
   "password": "Analog90!",
   "port": "5432"
 }

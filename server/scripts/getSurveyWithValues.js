@@ -51,7 +51,7 @@ function createQuery( filters ) {
     table5.area_type AS area_type,
     table4.measure_type AS measure_type,
     table1.value AS value
-      FROM public.timewise_measures AS table1
+      FROM public.laus_timewise_measures AS table1
         INNER JOIN public.local_unemployment_descriptive AS table2
         ON table1.series_id = table2.series_id
         INNER JOIN public.measure_type_enums AS table4
