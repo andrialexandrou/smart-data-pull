@@ -4,6 +4,8 @@ const _ = require('lodash');
 
 const getSurveyWithValues = require('./scripts/getSurveyWithValues');
 const getSuggestions = require('./scripts/getSuggestions');
+const createCsv = require('json2csv').parse;
+const fs = require('fs');
 
 const lausFilters = {
   series_id: true,
@@ -61,6 +63,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/download', (req, res) => {
+  console.log('TRIGGERED FROM LAUS');
   const page = req.query.page || 0;
   const filters = collectFilters(req.query);
   if ( !filters ) {

@@ -1,25 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
 
 const getSurveyWithValues = require('./scripts/getCesSurveyWithValues');
 const getSuggestions = require('./scripts/getCesSuggestions');
+const createCsv = require('json2csv').parse;
 
-const lausFilters = {
+const empFilters = {
   series_id: true,
-  area_code: true,
   seasonality_enum: true,
-  industry_code: true,
-  employment_code: true,
-  state_code: true,
-  supersector_code: true
+  industry_type: true,
+  state: true,
+  supersector_type: true,
+  period: true,
+  label: true
 };
 
 function collectFilters( queryParams ) {
   const thisRequest = {};
   _.forEach( queryParams, function(value, param) {
     const values = value.split('|');
-    if ( lausFilters[ param ] ) {
+    if ( empFilters[ param ] ) {
       thisRequest[ param ] = values;
     }
   })
@@ -27,7 +30,20 @@ function collectFilters( queryParams ) {
 }
 
 function convertToCsv( arrayOfInfo ) {
-  const fields = [];
+  const fields = [
+    'survey_name',
+    'series_title',
+    'series_id',
+    'state',
+    'area_type',
+    'industry',
+    'supersector',
+    'seasonality_enum',
+    'label',
+    'period',
+    'employment_type',
+    'value'
+  ];
   const options = { fields: fields };
   return createCsv( arrayOfInfo, options );
 }
@@ -62,13 +78,12 @@ router.get('/download', (req, res) => {
       res.status(400).send('Invalid Filter');
     }
     if ( dbRes && dbRes.rows ) {
-
       const csv = convertToCsv( dbRes.rows );
       if ( err ) res.status(500).send('Problem creating CSV on server.');
 
       fs.writeFile( csvFileName, csv, err => {
         if ( err ) res.status(400).send('Problem writing to file!');
-        res.download( csvFileName, 'laus.csv');
+        res.download( csvFileName, 'employment.csv');
         setTimeout( () => fs.unlink( csvFileName, () => {}), 10000 );
       })
 
@@ -82,7 +97,7 @@ router.get('/suggest', (req, res) => {
   const geography = req.query.geo;
 
   getSuggestions( geography, (err, dbRes) => {
-    if ( err ) console.log('[/unemp/suggest]', err);
+    if ( err ) console.log('[/employ/suggest]', err);
     const rows = dbRes.rows;
     res.status(200).send( rows );
   } );

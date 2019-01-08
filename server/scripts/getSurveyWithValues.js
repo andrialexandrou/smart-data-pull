@@ -62,7 +62,6 @@ function createQuery( filters ) {
     baseQuery += createWhereClause( filters );
   }
   return baseQuery;
-  return baseQuery += ` LIMIT $1 OFFSET $2`;
 }
 
 const limit = 100;

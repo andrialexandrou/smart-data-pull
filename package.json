@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest tests",
-    "start-data-pull": "node server/datapull/historic",
+    "start-data-pull": "node server/datapull/datapull",
     "start-server": "NODE_ENV=production node server",
     "dev-server": "NODE_ENV=development nodemon server",
     "dev-tests": "npm run test -- --watch"
