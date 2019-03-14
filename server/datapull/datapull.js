@@ -20,14 +20,10 @@ function saveForRetry( seriesArray, startYear, endYear ) {
   }
 }
 
-// function getTimePeriodFromResult( result ) {
-//   var timelyResults = result.data;
-//   timelyResults.forEach( timePeriod => {
-//     var isoPeriod = createISOString( timePeriod);
-// }
-
 function upsertToDatabase( results ) {
-  console.log('results[0]', results[0]);
+  if (!_.isArray) {
+    console.log('Results is not an array', results);
+  }
   results.forEach( result => {
     var id = result.seriesID;
     var timelyResults = result.data;
@@ -41,14 +37,7 @@ function upsertToDatabase( results ) {
         'laus_timewise_measures';
 
       const upsert = `INSERT INTO public.${ table }
-        (series_id, period, label, value)
-        SELECT '${id}', '${emPeriod}', '${isoPeriod}', '${value}'
-        WHERE
-            NOT EXISTS (
-                SELECT series_id, label FROM public.ces_timewise_measures
-            WHERE series_id='${id}'
-            AND label='${isoPeriod}'
-            );`
+        VALUES ('${id}', '${emPeriod}', '${isoPeriod}', '${value}')`;
 
       client.query(upsert,
         function( err, res) {
@@ -64,7 +53,6 @@ function upsertToDatabase( results ) {
 }
 
 function request( seriesArray, startYear, endYear, isLatest ) {
-  console.log('args', ...arguments);
   if ( !isLatest ) {
     saveForRetry( seriesArray, startYear, endYear );
   }
@@ -121,7 +109,6 @@ function createISOString( timePeriod ) {
   var month = monthEnums[ timePeriod.periodName ];
 
   if ( !month ) {
-    console.log( "Couldn't find a month, hombre", timePeriod );
     if ( false /* is annual average */ ) {
       return year;
     }
@@ -163,7 +150,7 @@ function handleResponse( res ) {
   } );
 }
 
-function requestForAllHistoric( seriesIds ) {
+function requestForAllHistoric( seriesIds, currentYear ) {
   var setsOfFifty = [];
 
   while ( seriesIds.length > 0 ) {
@@ -177,11 +164,11 @@ function requestForAllHistoric( seriesIds ) {
     }
 
     var setToRequest = setsOfFifty.shift();
-    console.log('\nREQUESTING NEXT SET FOR ALL TIME PERIODs');
+    console.log('\nREQUESTING NEXT SET FOR ALL TIME PERIODS beginning with', setToRequest[0]);
 
     const timeWindow = {};
-    timeWindow.start = 1900 + ( new Date() ).getYear() - 1;
-    timeWindow.end = 1900 + ( new Date() ).getYear() - 1;
+    timeWindow.start = currentYear - 1;
+    timeWindow.end = currentYear;
 
     request( setToRequest, timeWindow.start, timeWindow.end )
       .then( upsertToDatabase )
@@ -193,20 +180,30 @@ function convertRowsToIds( rowsArray ) {
   return rowsArray.map( obj => obj.series_id );
 }
 
-function getLabel( rowsArray ) {
-  return rowsArray.map( obj => obj.label )[0];
-}
-
-function getOneId( type ) {
+function getOneId( type, area ) {
+  let regionClause;
   const table = type === 'employment' ?
     'current_employment_descriptive' :
     'local_unemployment_descriptive';
+  if (type === 'employment') {
+    regionClause = area === 'metropolitan' ?
+      `WHERE series_id LIKE 'LA%'` :
+      `WHERE series_id LIKE 'CE%'`;
+  } else {
+    regionClause = area === 'metropolitan' ?
+      `WHERE series_id LIKE 'LA%'` :
+      `WHERE series_id LIKE 'LN%'`;
+
+  }
   return new Promise( ( resolve, reject ) => {
-    client.query(`
+    const query = `
       SELECT series_id
         FROM public.${ table }
+        ${ regionClause }
         LIMIT 1;
-      `, function( err, res ) {
+      `;
+    console.log('query', query);
+    client.query(query, function( err, res ) {
         if ( err ) reject(err);
         const rows = convertRowsToIds( res.rows );
         resolve(rows[0]);
@@ -215,90 +212,77 @@ function getOneId( type ) {
   } );
 }
 
-function latestForId( type, id ) {
-  const table = type === 'employment' ?
-    'ces_timewise_measures' :
-    'laus_timewise_measures';
-  return new Promise( ( resolve, reject ) => {
-    client.query(`
-      SELECT label
-        FROM public.${ table }
-        WHERE series_id='${ id }'
-        ORDER BY label DESC
-        LIMIT 1;
-      `, function( err, res ) {
-        if ( err ) reject(err);
-        const label = getLabel( res.rows );
-        resolve({
-          id,
-          label
-        });
-      }
-    );
-  } );
+function getListOfOutdated(type, area, isoPeriod) {
+    const empTable = 'ces_timewise_latest';
+    const unempTable = 'laus_timewise_latest';
+    let regionClause;
+
+    const table = type === 'employment' ?
+      empTable :
+      unempTable;
+    if (type === 'employment') {
+      regionClause = area === 'metropolitan' ?
+        `AND series_id LIKE 'LA%'` :
+        `AND series_id LIKE 'CE%'`;
+    } else {
+      regionClause = area === 'metropolitan' ?
+        `AND series_id LIKE 'LA%'` :
+        `AND series_id LIKE 'LN%'`;
+
+    }
+
+    const query = `SELECT series_id FROM public.${ table }
+      WHERE label != '${ isoPeriod }'
+      ${ regionClause }`;
+      console.log('query', query);
+
+    return new Promise( resolve => {
+      client.query( query, function( err, res ) {
+          if ( err ) console.log(err);
+
+          const rows = convertRowsToIds( res.rows );
+          resolve( rows );
+        }
+      );
+    } );
 }
 
-function selectIdsFromDatabase( tables ) {
-  let queryTemplate = table => `SELECT series_id FROM public.${ table }`;
-  const query = tables.map( queryTemplate ).join(' UNION ');
-  return new Promise( resolve => {
-    client.query( query, function( err, res ) {
-        if ( err ) console.log(err);
+function procedureForOutdatedAsync(type, area) {
+  var currentYear = 0;
+  getOneId(type, area)
+  .then( id => {
+    console.log('ID', id);
+    if (!id) {
+      console.log('No ids for', type, area);
+      return;
+    }
+    return request( [ id ], null, null, true )
+  } )
+  .then( blsResult => {
+    var timePeriod = blsResult[0].data[0];
+    console.log('timePeriod', timePeriod);
+    currentYear = timePeriod.year;
+    var isoPeriod = createISOString( timePeriod);
+    return getListOfOutdated(type, area, isoPeriod);
+  })
+  .then(list => {
+    if (!list || list && list.length === 0) {
+      console.log('No out-of-date records on', new Date());
+      return;
+    }
+    return requestForAllHistoric( list, currentYear );
+  } )
+  .catch(err => {
+    if (err) console.log('err', err);
+  })
 
-        const rows = convertRowsToIds( res.rows );
-        resolve( rows );
-      }
-    );
-  } );
 }
 
 function dailyTest() {
-  // get 1 from each
-  let isoStringInDb = '';
-  const empTable = 'current_employment_descriptive';
-  const unempTable = 'local_unemployment_descriptive'
-  const tablesToQuery = [];
-
-  function addNecessaryRequests( type ) {
-    return new Promise( (resolve, reject) => {
-      getOneId( type )
-        .then( id => {
-          return latestForId( type, id );
-        })
-        .then( latestInDb => {
-          isoStringInDb = latestInDb.label;
-          return request( [ latestInDb.id ], null, null, true );
-        })
-        .then( blsResult => {
-          var timePeriod = blsResult[0].data[0];
-          var isoPeriod = createISOString( timePeriod);
-          const hasNewData = isoPeriod !== isoStringInDb;
-          if ( hasNewData ) {
-            const table = type === 'employment' ?
-              empTable :
-              unempTable;
-            tablesToQuery.push( table );
-          }
-          timePeriod = '';
-          return;
-        })
-        .then( resolve );
-    } );
-  }
-
-  addNecessaryRequests( 'employment' )
-  .then( () => {
-    return addNecessaryRequests( 'unemployment' );
-  } )
-  .then( () => {
-    console.log('tablesToQuery', tablesToQuery);
-    return selectIdsFromDatabase( tablesToQuery );
-  })
-  .then( rows => {
-    console.log('length', rows.length);
-    console.log('[0]', rows[0]);
-    requestForAllHistoric(rows);
-  });
+  // procedureForOutdatedAsync('employment', 'federal'); // done
+  procedureForOutdatedAsync('employment', 'metropolitan');
+  // procedureForOutdatedAsync('unemployment', 'federal');
+  // procedureForOutdatedAsync('unemployment', 'metropolitan');
 }
 
 dailyTest();
