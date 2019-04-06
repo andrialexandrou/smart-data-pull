@@ -1,17 +1,34 @@
+const fs = require( 'fs' );
+var path = require('path');
 const blsConfig = require( './bls.json' );
 const _ = require('lodash');
+
+const configPath = path.join(__dirname, 'bls.json')
 
 module.exports = class ApiKey {
   constructor() {
     this.currentKey = ''
+
     this.keys = []
     this.expired = false
-    this.reset();
+    this.init();
   }
 
   cycleKeys() {
-    this.currentKey = this.keys.shift();
-    this.keys.push( this.currentKey );
+    this.index = ( this.index + 1 ) % 7
+    this.currentKey = this.keys[ this.index ];
+
+    const newObject = Object.assign({}, blsConfig, {
+      index: this.index
+    })
+    fs.writeFile(
+      configPath, 
+      JSON.stringify( newObject, null, 2 ), 
+      'utf8', 
+      err => {
+        if ( err ) console.log( err )
+      }
+    )
   }
 
   get() {
@@ -22,9 +39,10 @@ module.exports = class ApiKey {
     return this.currentKey;
   }
 
-  reset() {
-    this.keys = _.map( blsConfig, value => value );
-    this.cycleKeys();
+  init() {
+    this.keys = blsConfig.keys;
+    this.index = blsConfig.index;
+    this.currentKey = this.keys[ this.index ]
   }
 
   expire() {
