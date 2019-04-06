@@ -24,6 +24,7 @@ function upsertToDatabase( results ) {
   if (!_.isArray) {
     console.log('Results is not an array', results);
   }
+
   results.forEach( result => {
     var id = result.seriesID;
     var timelyResults = result.data;
@@ -31,33 +32,48 @@ function upsertToDatabase( results ) {
       var isoPeriod = createISOString( timePeriod);
       var emPeriod = timePeriod.period;
       var value = timePeriod.value;
+      const whichTable = `SELECT count(*) FROM current_employment_descriptive WHERE series_id = '${ id }'`;
+      client.query(whichTable, function(err, res) {
+        const isEmployment = res.rows[ 0 ].count > 0
 
-      const table = true ?
-        'ces_timewise_measures' :
-        'laus_timewise_measures';
+        const measuresTable = isEmployment ?
+          'ces_timewise_measures' :
+          'laus_timewise_measures';
+        const latestTable = isEmployment ?
+          'ces_timewise_latest' :
+          'laus_timewise_latest';
 
-      const upsert = `INSERT INTO public.${ table }
-        VALUES ('${id}', '${emPeriod}', '${isoPeriod}', '${value}')`;
-
-      client.query(upsert,
-        function( err, res) {
+        const insert = `INSERT INTO public.${ measuresTable }
+          VALUES ('${id}', '${emPeriod}', '${isoPeriod}', '${value}')`;
+        const today = createISOString(new Date());
+        const updateLatestTableWithToday = `UPDATE ${ latestTable }
+          SET label='${ today }'
+          WHERE series_id='${ id }'`;
+  
+        client.query(insert, function( err, res) {
           if ( err ) {
             if ( err.error && !err.error.includes('duplicate key value violates')) {
               console.log('client query err', err);
             }
+          } else {
+            // do another 
+            // needs to only update when all are done. currently doing for every month
+            client.query(updateLatestTableWithToday, function(err,res) {
+              // do what
+              if ( err ) console.log(err)
+              if ( res ) {
+                console.log(`Success updating ${ id } for period ${ emPeriod }`)
+              }
+            })
           }
-        }
-      );
+        })
+      })
     })
   })
 }
 
-function request( seriesArray, startYear, endYear, isLatest ) {
-  if ( !isLatest ) {
-    saveForRetry( seriesArray, startYear, endYear );
-  }
+function request( seriesArray, startYear, endYear) {
   const urlPath = "https://api.bls.gov/publicAPI/v2/timeseries/data/";
-  // split into 50 hombre
   if ( !seriesArray ) {
     return;
   }
@@ -65,14 +81,10 @@ function request( seriesArray, startYear, endYear, isLatest ) {
   const options = {
     "seriesid": seriesArray,
     "registrationkey": apiKey.get(),
+    annualaverage: true,
+    startyear: startYear.toString(),
+    endyear: endYear.toString()
   };
-  if ( isLatest ) {
-    options.latest = true;
-  } else {
-    options.annualaverage =  true;
-    options.startyear =  startYear.toString();
-    options.endyear = endYear.toString();
-  }
 
   return new Promise( (resolve, reject) => {
     axios.post( urlPath, options )
@@ -105,17 +117,15 @@ var monthEnums = {
 }
 
 function createISOString( timePeriod ) {
-  var year = timePeriod.year;
-  var month = monthEnums[ timePeriod.periodName ];
-
-  if ( !month ) {
-    if ( false /* is annual average */ ) {
-      return year;
-    }
+  if ( timePeriod instanceof Date ) {
+    return timePeriod.toISOString().substring(0,10)
   }
+  var year = timePeriod.year;
+  
   if ( month === "13" ) {
     return year;
   } else {
+    var month = monthEnums[ timePeriod.periodName ];
     return year + "-" + month + "-01";
   }
 }
@@ -150,7 +160,7 @@ function handleResponse( res ) {
   } );
 }
 
-function requestForAllHistoric( seriesIds, currentYear ) {
+function requestForAllHistoric( seriesIds, currentYear, cb ) {
   var setsOfFifty = [];
 
   while ( seriesIds.length > 0 ) {
@@ -160,6 +170,7 @@ function requestForAllHistoric( seriesIds, currentYear ) {
 
   (function onRequestComplete() {
     if ( setsOfFifty.length <= 0 ) {
+      cb();
       return;
     }
 
@@ -172,7 +183,9 @@ function requestForAllHistoric( seriesIds, currentYear ) {
 
     request( setToRequest, timeWindow.start, timeWindow.end )
       .then( upsertToDatabase )
-      .then( () => onRequestComplete() );
+      .then( () => {
+        onRequestComplete() 
+      });
   })();
 }
 
@@ -180,109 +193,38 @@ function convertRowsToIds( rowsArray ) {
   return rowsArray.map( obj => obj.series_id );
 }
 
-function getOneId( type, area ) {
-  let regionClause;
+function getListOfOutdatedAsync( type ) {
   const table = type === 'employment' ?
-    'current_employment_descriptive' :
-    'local_unemployment_descriptive';
-  if (type === 'employment') {
-    regionClause = area === 'metropolitan' ?
-      `WHERE series_id LIKE 'LA%'` :
-      `WHERE series_id LIKE 'CE%'`;
-  } else {
-    regionClause = area === 'metropolitan' ?
-      `WHERE series_id LIKE 'LA%'` :
-      `WHERE series_id LIKE 'LN%'`;
+    'ces_timewise_latest' :
+    'laus_timewise_latest';
 
-  }
-  return new Promise( ( resolve, reject ) => {
-    const query = `
-      SELECT series_id
-        FROM public.${ table }
-        ${ regionClause }
-        LIMIT 1;
-      `;
-    console.log('query', query);
-    client.query(query, function( err, res ) {
-        if ( err ) reject(err);
-        const rows = convertRowsToIds( res.rows );
-        resolve(rows[0]);
+  const today = createISOString( new Date() )
+  const findNotToday = `SELECT series_id, label FROM ${ table } WHERE label <> '${ today }'`
+
+  return new Promise( (resolve, reject) => {
+    client.query(findNotToday, function(err, res) {
+      if ( err ) {
+        console.log(err)
+      } else {
+        const ids = convertRowsToIds( res.rows )
+        resolve( ids )
       }
-    );
-  } );
+    })
+  })
 }
 
-function getListOfOutdated(type, area, isoPeriod) {
-    const empTable = 'ces_timewise_latest';
-    const unempTable = 'laus_timewise_latest';
-    let regionClause;
-
-    const table = type === 'employment' ?
-      empTable :
-      unempTable;
-    if (type === 'employment') {
-      regionClause = area === 'metropolitan' ?
-        `AND series_id LIKE 'LA%'` :
-        `AND series_id LIKE 'CE%'`;
-    } else {
-      regionClause = area === 'metropolitan' ?
-        `AND series_id LIKE 'LA%'` :
-        `AND series_id LIKE 'LN%'`;
-
-    }
-
-    const query = `SELECT series_id FROM public.${ table }
-      WHERE label != '${ isoPeriod }'
-      ${ regionClause }`;
-      console.log('query', query);
-
-    return new Promise( resolve => {
-      client.query( query, function( err, res ) {
-          if ( err ) console.log(err);
-
-          const rows = convertRowsToIds( res.rows );
-          resolve( rows );
-        }
-      );
-    } );
-}
-
-function procedureForOutdatedAsync(type, area) {
-  var currentYear = 0;
-  getOneId(type, area)
-  .then( id => {
-    console.log('ID', id);
-    if (!id) {
-      console.log('No ids for', type, area);
-      return;
-    }
-    return request( [ id ], null, null, true )
-  } )
-  .then( blsResult => {
-    var timePeriod = blsResult[0].data[0];
-    console.log('timePeriod', timePeriod);
-    currentYear = timePeriod.year;
-    var isoPeriod = createISOString( timePeriod);
-    return getListOfOutdated(type, area, isoPeriod);
-  })
-  .then(list => {
-    if (!list || list && list.length === 0) {
-      console.log('No out-of-date records on', new Date());
-      return;
-    }
-    return requestForAllHistoric( list, currentYear );
-  } )
-  .catch(err => {
-    if (err) console.log('err', err);
-  })
-
+function procedureForOutdatedAsync(type) {
+  return getListOfOutdatedAsync( type )
+    .then( ids => {
+      return requestForAllHistoric( ids, new Date().getUTCFullYear() )
+    } )
+  
 }
 
 function dailyTest() {
-  // procedureForOutdatedAsync('employment', 'federal'); // done
-  procedureForOutdatedAsync('employment', 'metropolitan');
-  // procedureForOutdatedAsync('unemployment', 'federal');
-  // procedureForOutdatedAsync('unemployment', 'metropolitan');
+  procedureForOutdatedAsync('employment', () => {
+    procedureForOutdatedAsync('unemployment');
+  })
 }
 
 dailyTest();
