@@ -25,6 +25,7 @@ console.log('Running script on', createISOString(new Date()))
 function upsertToDatabase( results ) {
   if (!_.isArray(results)) {
     console.log('Results is not an array', results);
+    return;
   }
 
   results.forEach( result => {
