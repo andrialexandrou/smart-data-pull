@@ -51,9 +51,11 @@ function upsertToDatabase( results ) {
         const updateLatestTableWithToday = `UPDATE ${ latestTable }
           SET label='${ today }'
           WHERE series_id='${ id }'`;
+        console.log('update script', updateLatestTableWithToday)
   
         client.query(insert, function( err, res) {
           if ( err ) {
+            console.log('err on insert', err)
             if ( err.error && !err.error.includes('duplicate key value violates')) {
               console.log('client query err', err);
             }
@@ -121,6 +123,7 @@ var monthEnums = {
 
 function createISOString( timePeriod ) {
   if ( timePeriod instanceof Date ) {
+    console.log('today', timePeriod)
     return timePeriod.toISOString().substring(0,10)
   }
   var year = timePeriod.year;
