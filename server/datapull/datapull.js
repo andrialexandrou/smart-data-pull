@@ -36,6 +36,7 @@ function upsertToDatabase( results ) {
       var value = timePeriod.value;
       const whichTable = `SELECT count(*) FROM current_employment_descriptive WHERE series_id = '${ id }'`;
       client.query(whichTable, function(err, res) {
+        if ( err ) console.log('err on whichTable script', err )
         const isEmployment = res.rows[ 0 ].count > 0
 
         const measuresTable = isEmployment ?
@@ -56,17 +57,14 @@ function upsertToDatabase( results ) {
         client.query(insert, function( err, res) {
           if ( err ) {
             console.log('err on insert', err)
-            if ( err.error && !err.error.includes('duplicate key value violates')) {
-              console.log('client query err', err);
-            }
           } else {
             // do another 
             // needs to only update when all are done. currently doing for every month
             client.query(updateLatestTableWithToday, function(err,res) {
               // do what
-              if ( err ) console.log(err)
+              if ( err ) console.log('err on updateLatestTableWithToday', err)
               if ( res ) {
-                console.log(`Success updating ${ id } for period ${ emPeriod }`)
+                console.log(`Success updating ${ id } for period ${ emPeriod } with label ${ today }`)
               }
             })
           }
@@ -123,7 +121,6 @@ var monthEnums = {
 
 function createISOString( timePeriod ) {
   if ( timePeriod instanceof Date ) {
-    console.log('today', timePeriod)
     return timePeriod.toISOString().substring(0,10)
   }
   var year = timePeriod.year;
