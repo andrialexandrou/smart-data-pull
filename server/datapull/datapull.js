@@ -35,9 +35,9 @@ function upsertToDatabase( results ) {
       var emPeriod = timePeriod.period;
       var value = timePeriod.value;
       const whichTable = `SELECT count(*) FROM current_employment_descriptive WHERE series_id = '${ id }'`;
-      client.query(whichTable, function(err, res) {
-        if ( err ) console.log('err on whichTable script', err )
-        const isEmployment = res.rows[ 0 ].count > 0
+      client.query(whichTable, function(err0, res0) {
+        if ( err0 ) console.log('err0 on whichTable script', err0 )
+        const isEmployment = res0.rows[ 0 ].count > 0
 
         const measuresTable = isEmployment ?
           'ces_timewise_measures' :
@@ -55,16 +55,17 @@ function upsertToDatabase( results ) {
         console.log('update script', updateLatestTableWithToday)
   
         client.query(insert, function( err, res) {
+          console.log('res from insert', res)
           if ( err ) {
             console.log('err on insert', err)
           } else {
             // do another 
             // needs to only update when all are done. currently doing for every month
-            client.query(updateLatestTableWithToday, function(err,res) {
+            client.query(updateLatestTableWithToday, function(SECONDERR,SECONDRES) {
               // do what
-              if ( err ) console.log('err on updateLatestTableWithToday', err)
-              if ( res ) {
-                console.log(`Success updating ${ id } for period ${ emPeriod } with label ${ today }`)
+              if ( SECONDERR ) console.log('err on updateLatestTableWithToday', SECONDERR)
+              if ( SECONDRES ) {
+                console.log(`Success updating ${ id } for period ${ emPeriod } with label ${ today }`, SECONDRES)
               }
             })
           }
