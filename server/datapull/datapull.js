@@ -20,59 +20,101 @@ function saveForRetry( seriesArray, startYear, endYear ) {
   }
 }
 
-console.log('Running script on', createISOString(new Date()))
+function insert(script) {
+  client.query(script, function( err, res) {
+    console.log('res from insert', res)
+    if ( err ) {
+      console.log('err on insert', err)
+    } else {
+      // do another 
+      // needs to only update when all are done. currently doing for every month
+      console.log('update script', updateLatestTableWithToday)
+    }
+  })
+}
 
-function upsertToDatabase( results ) {
+function updateWithToday() {
+  const today = createISOString(new Date());
+  const updateLatestTableWithToday = `UPDATE ${ latestTable }
+    SET label='${ today }'
+    WHERE series_id='${ id }'`;
+    
+
+  client.query(updateLatestTableWithToday, function(err,res) {
+    // do what
+    if ( err ) console.log('err on updateLatestTableWithToday', err)
+    if ( res ) {
+      console.log(`Success updating ${ id } for period ${ emPeriod } with label ${ today }`, res)
+    }
+  })
+}
+
+function valueTimePeriodArray(id, timePeriod) {
+  return [
+    id,
+    createISOString(timePeriod),
+    timePeriod.period,
+    timePeriod.value
+  ]
+}
+
+function whichTable() {
+  const whichTable = `SELECT count(*) FROM current_employment_descriptive WHERE series_id = '${ id }'`;
+  client.query(whichTable, function(err0, res0) {
+    if ( err0 ) console.log('err0 on whichTable script', err0 )
+    const isEmployment = res0.rows[ 0 ].count > 0
+  
+    const measuresTable = isEmployment ?
+      'ces_timewise_measures' :
+      'laus_timewise_measures';
+    const latestTable = isEmployment ?
+      'ces_timewise_latest' :
+      'laus_timewise_latest';
+  })
+}
+
+// columns array
+// values array of arrays
+function makeBatchInsert(table, columns, values) {
+  console.log('batchinsert')
+  console.log('table', table)
+  console.log('columns', columns)
+  console.log('values', values)
+  const prefix = `INSERT INTO public.${ table } (${ columns.join( ',' )}) VALUES `;
+  console.log('prefix', prefix)
+  
+  const valuesClauses = values.map(valuesArr => {
+    const thing = valuesArr.map( val => `'${val}'`);
+    const second = thing.join(',')
+    return `( ${ second } )`;
+  });
+  console.log('valuesClauses', valuesClauses)
+  const valuesClause = valuesClauses.join(',');
+  return prefix + valuesClause;
+}
+
+function createBatchUpdateScript( results ) { // formerly upsert
   if (!_.isArray(results)) {
     console.log('Results is not an array', results);
     return;
   }
-
-  results.forEach( result => {
+  
+  results.map( result => {
+    // every region
     var id = result.seriesID;
+
     var timelyResults = result.data;
-    timelyResults.forEach( timePeriod => {
-      var isoPeriod = createISOString( timePeriod);
-      var emPeriod = timePeriod.period;
-      var value = timePeriod.value;
-      const whichTable = `SELECT count(*) FROM current_employment_descriptive WHERE series_id = '${ id }'`;
-      client.query(whichTable, function(err0, res0) {
-        if ( err0 ) console.log('err0 on whichTable script', err0 )
-        const isEmployment = res0.rows[ 0 ].count > 0
-
-        const measuresTable = isEmployment ?
-          'ces_timewise_measures' :
-          'laus_timewise_measures';
-        const latestTable = isEmployment ?
-          'ces_timewise_latest' :
-          'laus_timewise_latest';
-
-        const insert = `INSERT INTO public.${ measuresTable }
-          VALUES ('${id}', '${emPeriod}', '${isoPeriod}', '${value}')`;
-        const today = createISOString(new Date());
-        const updateLatestTableWithToday = `UPDATE ${ latestTable }
-          SET label='${ today }'
-          WHERE series_id='${ id }'`;
-          
-        client.query(insert, function( err, res) {
-          console.log('res from insert', res)
-          if ( err ) {
-            console.log('err on insert', err)
-          } else {
-            // do another 
-            // needs to only update when all are done. currently doing for every month
-            console.log('update script', updateLatestTableWithToday)
-            client.query(updateLatestTableWithToday, function(SECONDERR,SECONDRES) {
-              // do what
-              if ( SECONDERR ) console.log('err on updateLatestTableWithToday', SECONDERR)
-              if ( SECONDRES ) {
-                console.log(`Success updating ${ id } for period ${ emPeriod } with label ${ today }`, SECONDRES)
-              }
-            })
-          }
-        })
-      })
+    const arrayOfArrays = timelyResults.map( timePeriod => {
+      // every month in this region
+      return valueTimePeriodArray( id, timePeriod )
     })
+    const script = makeBatchInsert( 
+      'ces_timewise_measures',
+      ['series_id', 'period', 'label', 'value'],
+      arrayOfArrays 
+    )
+    console.log("script in createBatchUpdate", script)
+    return script;
   })
 }
 
@@ -165,7 +207,7 @@ function handleResponse( res ) {
   } );
 }
 
-function requestForAllHistoric( seriesIds, currentYear, cb ) {
+function requestForTheYear( seriesIds, currentYear, cb ) {
   var setsOfFifty = [];
 
   while ( seriesIds.length > 0 ) {
@@ -187,7 +229,9 @@ function requestForAllHistoric( seriesIds, currentYear, cb ) {
     timeWindow.end = currentYear;
 
     request( setToRequest, timeWindow.start, timeWindow.end )
-      .then( upsertToDatabase )
+      .then( results => {
+        const scripts50x = createBatchUpdateScript( results )
+      } )
       .then( () => {
         setTimeout( () => {
           onRequestComplete() 
@@ -223,7 +267,7 @@ function getListOfOutdatedAsync( type ) {
 function procedureForOutdatedAsync(type) {
   return getListOfOutdatedAsync( type )
     .then( ids => {
-      return requestForAllHistoric( ids, new Date().getUTCFullYear() )
+      return requestForTheYear( ids, new Date().getUTCFullYear() )
     } )
   
 }
