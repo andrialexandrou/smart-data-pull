@@ -52,8 +52,7 @@ function upsertToDatabase( results ) {
         const updateLatestTableWithToday = `UPDATE ${ latestTable }
           SET label='${ today }'
           WHERE series_id='${ id }'`;
-        console.log('update script', updateLatestTableWithToday)
-  
+          
         client.query(insert, function( err, res) {
           console.log('res from insert', res)
           if ( err ) {
@@ -61,6 +60,7 @@ function upsertToDatabase( results ) {
           } else {
             // do another 
             // needs to only update when all are done. currently doing for every month
+            console.log('update script', updateLatestTableWithToday)
             client.query(updateLatestTableWithToday, function(SECONDERR,SECONDRES) {
               // do what
               if ( SECONDERR ) console.log('err on updateLatestTableWithToday', SECONDERR)
