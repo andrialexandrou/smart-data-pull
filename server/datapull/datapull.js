@@ -21,7 +21,7 @@ function saveForRetry( seriesArray, startYear, endYear ) {
 }
 
 function upsertToDatabase( results ) {
-  if (!_.isArray) {
+  if (!_.isArray(results)) {
     console.log('Results is not an array', results);
   }
 
