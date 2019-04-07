@@ -73,6 +73,7 @@ function upsertToDatabase( results ) {
 }
 
 function request( seriesArray, startYear, endYear) {
+  saveForRetry( seriesArray, startYear, endYear );
   const urlPath = "https://api.bls.gov/publicAPI/v2/timeseries/data/";
   if ( !seriesArray ) {
     return;
@@ -184,7 +185,9 @@ function requestForAllHistoric( seriesIds, currentYear, cb ) {
     request( setToRequest, timeWindow.start, timeWindow.end )
       .then( upsertToDatabase )
       .then( () => {
-        onRequestComplete() 
+        setTimeout( () => {
+          onRequestComplete() 
+        }, 500 );
       });
   })();
 }
