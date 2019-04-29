@@ -13,8 +13,8 @@ const tables = {
   survey_name: 'table2',
   series_title: 'table2',
   series_id: 'table1',
+  area: 'table9',
   state: 'table8',
-  name: 'table9',
   industry_type: 'table6',
   supersector_type: 'table7',
   seasonality_enum: 'table2',
@@ -31,6 +31,8 @@ function createWhereClause( filters ) {
     const phrases = values.map( value => {
       if ( param === 'label' ) {
         return `${ table }.${ param } LIKE '%${ value }%'`;
+      } if ( param === 'area' ) {
+        return `${ table }.name LIKE '${ value }'`;
       } else {
         return `${ table }.${ param } LIKE '${ value }'`;
       }

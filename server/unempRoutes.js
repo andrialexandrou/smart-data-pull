@@ -10,6 +10,7 @@ const createCsv = require('json2csv').parse;
 
 const empFilters = {
   series_id: true,
+  area: true,
   seasonality_enum: true,
   industry_type: true,
   state: true,

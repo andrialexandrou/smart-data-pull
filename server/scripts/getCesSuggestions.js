@@ -7,9 +7,9 @@ const client = new Client( dbSecrets );
 client.connect();
 
 function createQuery( geoPhrase ) {
-  return `SELECT DISTINCT area
-  	FROM public.current_employment_descriptive
-  	WHERE LOWER(area) LIKE LOWER('%${ geoPhrase }%')
+  return `SELECT DISTINCT name
+  	FROM public.area_code_enums
+  	WHERE LOWER(name) LIKE LOWER('%${ geoPhrase }%')
     LIMIT 25`;
 }
 
